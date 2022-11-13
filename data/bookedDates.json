@@ -1,0 +1,245 @@
+[
+    {
+        "litmos_session_name": "Test Kurs Für Middleware Release Version 1 9 DCISSDE",
+        "room_id": 1,
+        "instructor_id": 1,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "max_seats": 10,
+        "available_seats": 0,
+        "session_type": "Classroom",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-14T20:29:22.898Z",
+                "end_date": "2022-11-14T20:29:22.898Z",
+                "start_time": "2022-11-14T20:29:22.898Z",
+                "end_time": "2022-11-15T06:29:22.898Z"
+            }
+        ]
+    },
+    {
+        "litmos_session_name": "Test Kurs Für Middleware Release Version 1 9 DCISSDE",
+        "room_id": 2,
+        "instructor_id": 1,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "max_seats": 12,
+        "available_seats": 4,
+        "session_type": "Webinar",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-14T20:29:22.898Z",
+                "end_date": "2022-11-14T20:29:22.898Z",
+                "start_time": "2022-11-14T20:29:22.898Z",
+                "end_time": "2022-11-15T06:29:22.898Z"
+            }
+        ]
+    },
+    {
+        "litmos_session_name": "Test Kurs Für Middleware Release Version 1 9 DCISSDE",
+        "room_id": 3,
+        "instructor_id": 2,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "max_seats": 12,
+        "available_seats": 9,
+        "session_type": "Microsoft Teams",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-16T20:29:22.898Z",
+                "end_date": "2022-11-16T20:29:22.898Z",
+                "start_time": "2022-11-16T20:29:22.898Z",
+                "end_time": "2022-11-17T06:29:22.898Z"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "litmos_session_name": "Course 1-RT04-004-DCEM/SLM-CH",
+        "room_id": 1,
+        "instructor_id": 2,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Webinar",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-16T19:05:20.027Z",
+                "end_date": "2022-11-16T19:05:20.027Z",
+                "start_time": "2022-11-13T19:23:21.124Z",
+                "end_time": "2022-11-13T19:23:21.124Z"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "litmos_session_name": "Course 1-RT04-004-DCEM/SLM-CH",
+        "room_id": 1,
+        "instructor_id": 1,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Classroom",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-17T19:24:31.096Z",
+                "end_date": "2022-11-17T19:24:31.096Z",
+                "start_time": "2022-11-13T19:24:41.783Z",
+                "end_time": "2022-11-13T19:24:41.783Z"
+            },
+            {
+                "start_date": "2022-11-17T23:00:00.000Z",
+                "end_date": "2022-11-17T23:00:00.000Z",
+                "start_time": "2022-11-13T09:04:00.117Z",
+                "end_time": "2022-11-13T14:16:00.984Z"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "litmos_session_name": "Course 1-RT04-004-DCEM/SLM-CH",
+        "room_id": 2,
+        "instructor_id": 2,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Microsoft Teams",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-19T19:25:15.913Z",
+                "end_date": "2022-11-19T19:25:15.913Z",
+                "start_time": "2022-11-13T19:26:14.936Z",
+                "end_time": "2022-11-13T19:26:14.936Z"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "litmos_session_name": "Course 1-RT04-004-DCEM/SLM-CH",
+        "room_id": 2,
+        "instructor_id": 1,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Webinar",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-20T19:26:29.049Z",
+                "end_date": "2022-11-20T19:26:29.049Z",
+                "start_time": "2022-11-13T19:27:37.104Z",
+                "end_time": "2022-11-13T19:27:37.104Z"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "litmos_session_name": "Course 1-RT04-004-DCEM/SLM-CH",
+        "room_id": 2,
+        "instructor_id": 1,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Classroom",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-23T23:00:00.000Z",
+                "end_date": "2022-11-23T23:00:00.000Z",
+                "start_time": "2022-11-13T19:31:59.132Z",
+                "end_time": "2022-11-13T19:31:59.132Z"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "litmos_session_name": "Course 1-RE04-23-DCEM/SLM-CH",
+        "room_id": 2,
+        "instructor_id": 1,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Microsoft Teams",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-24T23:00:00.000Z",
+                "end_date": "2022-11-24T23:00:00.000Z",
+                "start_time": "2022-11-13T19:33:15.263Z",
+                "end_time": "2022-11-13T19:33:15.263Z"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "litmos_session_name": "Course 1-re3-02-DC/SSD2",
+        "room_id": 1,
+        "instructor_id": 3,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "max_seats": 12,
+        "session_type": "Webinar",
+        "training_reference_number": "RT04-004",
+        "session_dates": [
+            {
+                "start_date": "2022-11-27T23:00:00.000Z",
+                "end_date": "2022-11-27T23:00:00.000Z",
+                "start_time": "2022-11-13T19:35:05.229Z",
+                "end_time": "2022-11-13T19:35:05.229Z"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "litmos_session_name": "Course 1-qq-DCEM/SLM-CH",
+        "room_id": 1,
+        "instructor_id": 2,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "training_reference_number": "qq",
+        "max_seats": 12,
+        "session_type": "Webinar",
+        "session_dates": [
+            {
+                "start_date": "2022-11-19T19:53:49.388Z",
+                "end_date": "2022-11-19T19:53:49.388Z",
+                "start_time": "2022-11-13T19:54:25.289Z",
+                "end_time": "2022-11-13T19:54:25.289Z"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "litmos_session_name": "Anwendungssoftware BODAS-ASrun Automatic Fan Control-DE-S-R40e-DCEM/SLM-CH",
+        "room_id": 1,
+        "instructor_id": 2,
+        "time_zone": "Europe/Berlin",
+        "min_seats": 1,
+        "available_seats": 12,
+        "training_reference_number": "R40e",
+        "max_seats": 12,
+        "session_type": "Classroom",
+        "session_dates": [
+            {
+                "start_date": "2022-11-17T20:16:06.863Z",
+                "end_date": "2022-11-17T20:16:06.863Z",
+                "start_time": "2022-11-13T20:16:41.715Z",
+                "end_time": "2022-11-13T20:16:41.715Z"
+            }
+        ]
+    }
+]

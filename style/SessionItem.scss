@@ -1,0 +1,21 @@
+.SessionItem {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border-style: 'solid';
+    border-width: 1;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3), 0 6px 0px 0px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: .3s all;
+
+    &:hover {
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3), 0 3px 0px 0px rgba(0, 0, 0, 0.15);
+        transform: translateY(3px);
+    }
+
+    &:active {
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3), 0 0px 0px 0px rgba(0, 0, 0, 0.15);
+        transform: translateY(6px);
+    }
+}

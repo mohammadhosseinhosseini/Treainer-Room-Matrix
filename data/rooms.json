@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "name": "Room 1",
+        "price": 100,
+        "city": "Berlin",
+        "country": "Germany"
+    },
+    {
+        "id": 2,
+        "name": "Room 2",
+        "price": 200,
+        "city": "Berlin",
+        "country": "Germany"
+    },
+    {
+        "id": 3,
+        "name": "Room 1",
+        "price": 100,
+        "city": "Hamburg",
+        "country": "Germany"
+    },
+    {
+        "id": 4,
+        "name": "Room 2",
+        "price": 200,
+        "city": "Hamburg",
+        "country": "Germany"
+    },
+    {
+        "id": 5,
+        "name": "Room 1",
+        "price": 100,
+        "city": "Munich",
+        "country": "Germany"
+    },
+    {
+        "id": 6,
+        "name": "Room 2",
+        "price": 200,
+        "city": "Munich",
+        "country": "Germany"
+    },
+    {
+        "id": 7,
+        "name": "Room 1",
+        "price": 100,
+        "city": "Paris",
+        "country": "France"
+    },
+    {
+        "id": 8,
+        "name": "Room 2",
+        "price": 200,
+        "city": "Paris",
+        "country": "France"
+    },
+    {
+        "id": 9,
+        "name": "Room 1",
+        "price": 100,
+        "city": "Lyon",
+        "country": "France"
+    },
+    {
+        "id": 10,
+        "name": "Room 2",
+        "price": 200,
+        "city": "Lyon",
+        "country": "France"
+    },
+    {
+        "id": 11,
+        "name": "Room 1",
+        "price": 100,
+        "city": "Marseille",
+        "country": "France"
+    },
+    {
+        "id": 12,
+        "name": "Room 2",
+        "price": 200,
+        "city": "Marseille",
+        "country": "France"
+    }
+]

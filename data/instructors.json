@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Max Mustermann",
+        "organization_id": 1
+    },
+    {
+        "id": 2,
+        "name": "Thomas Müller",
+        "organization_id": 1
+    },
+    {
+        "id": 3,
+        "name": "John Smith",
+        "organization_id": 2
+    },
+    {
+        "id": 4,
+        "name": "Jane Smith",
+        "organization_id": 2
+    }
+]
