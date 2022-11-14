@@ -6,6 +6,20 @@ import AddBook from '../components/AddBook'
 import SessionDetail from '../components/SessionDetail'
 
 import axios from 'axios'
+import {
+    collection,
+    getDocs,
+    updateDoc,
+    getDoc,
+    setDoc,
+    deleteDoc,
+    doc as docFirebase,
+    query,
+    where,
+    onSnapshot,
+} from 'firebase/firestore'
+
+import { db, storage } from '../firebase/db'
 
 function Home() {
     const [rooms, setRooms] = useState([])
@@ -19,40 +33,16 @@ function Home() {
 
     useEffect(() => {
         const getData = async () => {
-            try {
-                const result = await axios.get('/api/instructors')
-                setInstructors(
-                    result.data.map((instructor) => {
-                        return {
-                            ...instructor,
-                            checked: instructor.id === 1 || instructor.id === 2,
-                        }
-                    })
-                )
-            } catch (error) {
-                console.log(error)
-            }
+            const unsubscribe = onSnapshot(
+                query(collection(db, 'bookedDates')),
+                (querySnapshot) => {
+                    const temp = []
+                    querySnapshot.forEach((doc) => {
+                        const sessionDate = doc.data()
 
-            try {
-                const result = await axios.get('/api/rooms')
-                setRooms(
-                    result.data.map((room) => {
-                        return {
-                            ...room,
-                            checked: room.id === 1 || room.id === 2,
-                        }
-                    })
-                )
-            } catch (error) {
-                console.log(error)
-            }
-
-            try {
-                const result = await axios.get('/api/book-dates')
-                setBookedDates(
-                    result.data.map((sessionDate) => {
-                        return {
+                        temp.push({
                             ...sessionDate,
+                            firebase_id: doc.id,
                             session_dates: sessionDate.session_dates.map(
                                 (date) => {
                                     return {
@@ -63,19 +53,59 @@ function Home() {
                                     }
                                 }
                             ),
-                        }
+                        })
                     })
-                )
-            } catch (error) {
-                console.log(error)
-            }
 
-            try {
-                const result = await axios.get('/api/organizations')
-                setOrganizations(result.data)
-            } catch (error) {
-                console.log(error)
-            }
+                    setBookedDates(temp)
+                }
+            )
+
+            onSnapshot(
+                query(collection(db, 'instructors')),
+                (querySnapshot) => {
+                    const temp = []
+                    querySnapshot.forEach((doc) => {
+                        const instructor = doc.data()
+
+                        temp.push({
+                            ...instructor,
+                            checked: instructor.id === 1 || instructor.id === 2,
+                        })
+                    })
+
+                    setInstructors(temp)
+                }
+            )
+
+            onSnapshot(query(collection(db, 'rooms')), (querySnapshot) => {
+                const temp = []
+                querySnapshot.forEach((doc) => {
+                    const room = doc.data()
+
+                    temp.push({
+                        ...room,
+                        checked: room.id === 1 || room.id === 2,
+                    })
+                })
+
+                setRooms(temp)
+            })
+
+            onSnapshot(
+                query(collection(db, 'organizations')),
+                (querySnapshot) => {
+                    const temp = []
+                    querySnapshot.forEach((doc) => {
+                        const organization = doc.data()
+
+                        temp.push({
+                            ...organization,
+                        })
+                    })
+
+                    setOrganizations(temp)
+                }
+            )
         }
         getData()
     }, [])

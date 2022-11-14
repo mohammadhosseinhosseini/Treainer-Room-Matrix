@@ -8,6 +8,7 @@ import {
     InputLabel,
     Button,
 } from '@mui/material'
+import { collection, addDoc } from 'firebase/firestore'
 
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
@@ -17,6 +18,9 @@ import DatePickerList from './DatePickerList'
 import { LoadingButton } from '@mui/lab'
 
 import SaveTwoToneIcon from '@mui/icons-material/SaveTwoTone'
+
+import { db } from '../firebase/db'
+
 function AddBookForm({
     rooms,
     instructors,
@@ -113,23 +117,34 @@ function AddBookForm({
             }
         })
 
-        setLoading(true)
-        try {
-            const res = await axios.post('/api/book-dates', {
-                room_id: room,
-                instructor_id: instructor,
-                max_seats: maxSeats,
-                session_type: sessionType,
-                litmos_session_name,
-                session_dates: dates,
-                training_reference_number: trainingRefrenceNumber,
-            })
-            alert('Session added successfully')
-            addBookedDate(res.data.newBookedDate)
-            closeModal()
-        } catch (error) {
-            console.log(error)
-        }
+        // setLoading(true)
+
+        const docRef = collection(db, 'bookedDates')
+
+        const session_dates = dates.map((date) => {
+            return {
+                start_date: date.start_date.toString(),
+                end_date: date.end_date.toString(),
+                start_time: date.start_time.toString(),
+                end_time: date.end_time.toString(),
+            }
+        })
+
+        const newBookedDate = await addDoc(docRef, {
+            litmos_session_name: litmos_session_name,
+            room_id: parseInt(room),
+            instructor_id: parseInt(instructor),
+            time_zone: 'Europe/Berlin',
+            min_seats: 1,
+            available_seats: parseInt(maxSeats),
+            max_seats: parseInt(maxSeats),
+            training_reference_number: trainingRefrenceNumber,
+            session_type: sessionType,
+            session_dates,
+        })
+
+        alert('Session added successfully')
+        closeModal()
         setLoading(false)
     }
 

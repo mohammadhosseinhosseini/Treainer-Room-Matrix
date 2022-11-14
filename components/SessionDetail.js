@@ -10,6 +10,11 @@ import InsertLinkTwoToneIcon from '@mui/icons-material/InsertLinkTwoTone'
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone'
 import NightsStayTwoToneIcon from '@mui/icons-material/NightsStayTwoTone'
 import RoomPreferencesTwoToneIcon from '@mui/icons-material/RoomPreferencesTwoTone'
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone'
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone'
+
+import { db } from '../firebase/db'
+import { doc, deleteDoc } from 'firebase/firestore'
 
 const style = {
     position: 'absolute',
@@ -25,6 +30,17 @@ const style = {
 function SessionDetail({ open, handleClose, session }) {
     if (session == null) return <></>
     const { session_dates } = session
+
+    const handleDeleteSession = async () => {
+        try {
+            await deleteDoc(doc(db, 'bookedDates', session.firebase_id))
+            alert('Session deleted')
+            handleClose()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div>
             <Modal
@@ -181,6 +197,24 @@ function SessionDetail({ open, handleClose, session }) {
                                 startIcon={<VisibilityTwoToneIcon />}
                             >
                                 Show Course
+                            </Button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div className='row'>
+                        <div className='col-4'>
+                            <HighlightOffTwoToneIcon className='me-2' />
+                            Delete
+                        </div>
+                        <div className='col-8'>
+                            <Button
+                                variant='outlined'
+                                color='error'
+                                startIcon={<DeleteForeverTwoToneIcon />}
+                                className='me-2'
+                                onClick={handleDeleteSession}
+                            >
+                                Delete Session (test purposes)
                             </Button>
                         </div>
                     </div>
