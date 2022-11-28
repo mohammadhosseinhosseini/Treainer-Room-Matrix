@@ -30,22 +30,10 @@ function AddBook({
     instructors,
     selectedDate,
     addBookedDate,
+    courses,
 }) {
     const [course, setCourse] = useState('')
-    const [courses, setCourses] = useState([])
     const windowWidth = useWindowWidth()
-
-    useEffect(() => {
-        const getCourses = async () => {
-            try {
-                const res = await axios.get('/api/courses')
-                setCourses(res.data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getCourses()
-    }, [])
 
     const handleCourseChange = (id) => {
         setCourse(courses.find((c) => c.id === id))

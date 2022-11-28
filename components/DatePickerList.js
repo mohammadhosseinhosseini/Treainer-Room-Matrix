@@ -21,6 +21,7 @@ import KeyboardArrowUpTwoToneIcon from '@mui/icons-material/KeyboardArrowUpTwoTo
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import AlarmAddTwoToneIcon from '@mui/icons-material/AlarmAddTwoTone'
+import ContentCopyTwoToneIcon from '@mui/icons-material/ContentCopyTwoTone'
 
 function DatePickerList({ dates, setDates }) {
     const handleChangeStartDate = (date, index) => {
@@ -92,6 +93,14 @@ function DatePickerList({ dates, setDates }) {
         setDates((pre) => {
             const newDates = [...pre]
             newDates.splice(index, 1)
+            return newDates
+        })
+    }
+
+    const handleCopyDate = (index) => {
+        setDates((pre) => {
+            const newDates = [...pre]
+            newDates.splice(index + 1, 0, { ...newDates[index] })
             return newDates
         })
     }
@@ -209,6 +218,16 @@ function DatePickerList({ dates, setDates }) {
                                     }}
                                 >
                                     <DeleteTwoToneIcon />
+                                </IconButton>
+                                <IconButton
+                                    size='small'
+                                    color='warning'
+                                    // disabled={dates.length === 1}
+                                    onClick={() => {
+                                        handleCopyDate(i)
+                                    }}
+                                >
+                                    <ContentCopyTwoToneIcon />
                                 </IconButton>
                             </div>
                         </div>

@@ -1,7 +1,9 @@
 import React from 'react'
 import { Button, TableRow, TableCell, Chip } from '@mui/material'
-import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone'
-import { isDateEqual } from '../helper/helpers'
+import { isDateEqual } from '../../helper/helpers'
+import SessionItemSeats from './SessionItemSeats'
+import SchoolTwoToneIcon from '@mui/icons-material/SchoolTwoTone'
+import ClassTwoToneIcon from '@mui/icons-material/ClassTwoTone'
 
 const getBorderColor = (session_type) => {
     switch (session_type) {
@@ -42,7 +44,7 @@ const getColor = (session_type) => {
     }
 }
 
-function SessionItem({ session, date, showSessionDetail }) {
+function SessionItem({ session, date, showSessionDetail, isRoom }) {
     const {
         session_type,
         litmos_session_name,
@@ -52,7 +54,7 @@ function SessionItem({ session, date, showSessionDetail }) {
     } = session
     return (
         <div
-            className='SessionItem'
+            className={`SessionItem `}
             onClick={() => {
                 const dates = session_dates.map((session_date) => {
                     if (isDateEqual(session_date.start_date, date))
@@ -69,31 +71,34 @@ function SessionItem({ session, date, showSessionDetail }) {
                 color: getColor(session_type),
             }}
         >
-            <Chip
-                label={`${available_seats}/${max_seats}`}
-                size='small'
-                icon={<PeopleAltTwoToneIcon style={{ fontSize: 12 }} />}
-                color={
-                    available_seats === 0
-                        ? 'error'
-                        : available_seats <= 4
-                        ? 'warning'
-                        : 'success'
-                }
-                style={{
-                    fontSize: 10,
-                    color: 'white',
-                    padding: 0,
-                }}
+            <SessionItemSeats
+                availableSeats={available_seats}
+                maxSeats={max_seats}
             />
-            <p
-                className='m-0'
-                style={{
-                    fontSize: 10,
-                }}
-            >
-                {litmos_session_name}
-            </p>
+            <div className='d-flex mt-1'>
+                {/* <ClassTwoToneIcon style={{ fontSize: 20 }} /> */}
+                <p className='m-0 ms-1' style={{ fontSize: 12, color: '#333' }}>
+                    <strong>Name:</strong>
+                    {litmos_session_name}
+                </p>
+            </div>
+
+            <div className='d-flex mt-1'>
+                {/* <SchoolTwoToneIcon style={{ fontSize: 20 }} /> */}
+                <p className='m-0 ms-1' style={{ fontSize: 12, color: '#333' }}>
+                    {isRoom ? (
+                        <>
+                            <strong>Trainer:</strong>{' '}
+                            {session.instructors.map((i) => i.name).join(', ')}
+                        </>
+                    ) : (
+                        <>
+                            <strong>Room:</strong> {session.room.name} (
+                            {session.room.city})
+                        </>
+                    )}
+                </p>
+            </div>
         </div>
     )
 }

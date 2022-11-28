@@ -8,10 +8,13 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import { IconButton } from '@mui/material'
-import { isDateEqual } from '../helper/helpers'
+import { Button, IconButton } from '@mui/material'
+import { isDateEqual, isWeekWqual } from '../helper/helpers'
+import RestoreTwoToneIcon from '@mui/icons-material/RestoreTwoTone'
+import LoopTwoToneIcon from '@mui/icons-material/LoopTwoTone'
 
 import MatrixItem from './MatrixItem'
+import WeekPicker from './Matrix/WeekPicker'
 
 const dates = (current) => {
     var week = new Array()
@@ -28,18 +31,6 @@ const getWeekDay = (date) => {
     return date.toLocaleDateString('en-US', { weekday: 'short' })
 }
 
-function getWeekNumber(d) {
-    // Copy date so don't modify original
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7))
-    // Get first day of year
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
-    // Calculate full weeks to nearest Thursday
-    return Math.ceil(((d - yearStart) / 86400000 + 1) / 7)
-}
-
 export default function Matrix({
     rooms,
     instructors,
@@ -47,8 +38,11 @@ export default function Matrix({
     bookedDates,
     showSessionDetail,
     handleAddBookWithRoom,
+    courses,
+    refreshData,
 }) {
     const [week, setWeek] = useState(dates(new Date()))
+    const [refreshLoading, setRefreshLoading] = useState(false)
     useEffect(() => {}, [])
 
     const onClickBookRoom = (id, date) => {
@@ -61,7 +55,7 @@ export default function Matrix({
         console.log(id, date)
     }
 
-    const changeWeek = (forward = true) => {
+    const changeWeekOnce = (forward = true) => {
         setWeek((pre) => {
             const now = pre[0]
             return dates(
@@ -72,6 +66,10 @@ export default function Matrix({
                 )
             )
         })
+    }
+
+    const changeWeek = (date) => {
+        setWeek(dates(new Date(date)))
     }
 
     const isBooked = (id, date, isRoom) => {
@@ -95,24 +93,39 @@ export default function Matrix({
 
     return (
         <>
-            <div className='d-flex'>
-                <IconButton
+            <div className='mb-2 d-flex'>
+                <WeekPicker
+                    week={week}
+                    changeWeek={changeWeek}
+                    changeWeekOnce={changeWeekOnce}
+                />
+                <Button
+                    className='ms-2'
+                    variant='outlined'
                     color='primary'
+                    startIcon={<RestoreTwoToneIcon />}
+                    disabled={isWeekWqual(week[0], new Date())}
                     onClick={() => {
-                        changeWeek(false)
+                        setWeek(dates(new Date()))
                     }}
                 >
-                    <ArrowBackIosNewIcon />
-                </IconButton>
-                <IconButton
-                    color='primary'
+                    Current Week
+                </Button>
+                <Button
+                    className='ms-auto'
+                    variant='outlined'
+                    color='success'
+                    startIcon={<LoopTwoToneIcon />}
+                    disabled={refreshLoading}
                     onClick={() => {
-                        changeWeek(true)
+                        setRefreshLoading(true)
+                        refreshData().then(() => {
+                            setRefreshLoading(false)
+                        })
                     }}
                 >
-                    <ArrowForwardIosIcon />
-                </IconButton>
-                <h2>CW{getWeekNumber(week[0])}</h2>
+                    Refresh Data
+                </Button>
             </div>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -163,7 +176,10 @@ export default function Matrix({
                                 <b>Instructors</b>
                             </TableCell>
                             {week.map((day) => (
-                                <TableCell key={day}></TableCell>
+                                <TableCell
+                                    key={day}
+                                    style={{ minWidth: 180 }}
+                                ></TableCell>
                             ))}
                         </TableRow>
                         {instructors.length > 0 &&
@@ -176,6 +192,7 @@ export default function Matrix({
                                     onBookClick={onClickBookInstructor}
                                     isBooked={isBooked}
                                     showSessionDetail={showSessionDetail}
+                                    courses={courses}
                                 />
                             ))}
                     </TableBody>

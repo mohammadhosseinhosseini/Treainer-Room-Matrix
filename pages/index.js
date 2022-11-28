@@ -6,109 +6,65 @@ import AddBook from '../components/AddBook'
 import SessionDetail from '../components/SessionDetail'
 
 import axios from 'axios'
-import {
-    collection,
-    getDocs,
-    updateDoc,
-    getDoc,
-    setDoc,
-    deleteDoc,
-    doc as docFirebase,
-    query,
-    where,
-    onSnapshot,
-} from 'firebase/firestore'
-
-import { db, storage } from '../firebase/db'
 
 function Home() {
     const [rooms, setRooms] = useState([])
     const [instructors, setInstructors] = useState([])
     const [bookedDates, setBookedDates] = useState([])
     const [organizations, setOrganizations] = useState([])
+    const [courses, setCourses] = useState([])
     const [showAddBook, setShowAddBook] = useState(false)
     const [session, setSession] = useState(null)
     const [selectedRoom, setSelectedRoom] = useState('')
     const [selectedDate, setSelectedDate] = useState(null)
 
     useEffect(() => {
-        const getData = async () => {
-            const unsubscribe = onSnapshot(
-                query(collection(db, 'bookedDates')),
-                (querySnapshot) => {
-                    const temp = []
-                    querySnapshot.forEach((doc) => {
-                        const sessionDate = doc.data()
-
-                        temp.push({
-                            ...sessionDate,
-                            firebase_id: doc.id,
-                            session_dates: sessionDate.session_dates.map(
-                                (date) => {
-                                    return {
-                                        start_date: new Date(date.start_date),
-                                        end_date: new Date(date.end_date),
-                                        start_time: new Date(date.start_time),
-                                        end_time: new Date(date.end_time),
-                                    }
-                                }
-                            ),
-                        })
-                    })
-
-                    setBookedDates(temp)
-                }
-            )
-
-            onSnapshot(
-                query(collection(db, 'instructors')),
-                (querySnapshot) => {
-                    const temp = []
-                    querySnapshot.forEach((doc) => {
-                        const instructor = doc.data()
-
-                        temp.push({
-                            ...instructor,
-                            checked: instructor.id === 1 || instructor.id === 2,
-                        })
-                    })
-
-                    setInstructors(temp)
-                }
-            )
-
-            onSnapshot(query(collection(db, 'rooms')), (querySnapshot) => {
-                const temp = []
-                querySnapshot.forEach((doc) => {
-                    const room = doc.data()
-
-                    temp.push({
-                        ...room,
-                        checked: room.id === 1 || room.id === 2,
-                    })
-                })
-
-                setRooms(temp)
-            })
-
-            onSnapshot(
-                query(collection(db, 'organizations')),
-                (querySnapshot) => {
-                    const temp = []
-                    querySnapshot.forEach((doc) => {
-                        const organization = doc.data()
-
-                        temp.push({
-                            ...organization,
-                        })
-                    })
-
-                    setOrganizations(temp)
-                }
-            )
-        }
         getData()
     }, [])
+
+    const getData = async () => {
+        const { data } = await axios.get('/api/data')
+
+        setCourses(data.courses)
+
+        setBookedDates(
+            data.bookedDates.map((date) => {
+                return {
+                    ...date,
+                    session_dates: date.session_dates.map((date) => {
+                        return {
+                            start_date: new Date(date.start_date),
+                            end_date: new Date(date.end_date),
+                            start_time: new Date(date.start_time),
+                            end_time: new Date(date.end_time),
+                        }
+                    }),
+                }
+            })
+        )
+
+        setInstructors(
+            data.instructors.map((instructor) => {
+                return {
+                    ...instructor,
+                    firebase_id: instructor.firebase_id,
+                    checked: instructor.id === 1 || instructor.id === 2,
+                }
+            })
+        )
+
+        setRooms(
+            data.rooms.map((room) => {
+                return {
+                    ...room,
+                    firebase_id: room.firebase_id,
+                    checked: room.id === 1 || room.id === 2,
+                }
+            })
+        )
+
+        setOrganizations(data.organizations)
+    }
 
     const handleRoomCheck = (id) => {
         const newRooms = [...rooms]
@@ -188,6 +144,8 @@ function Home() {
                             handleAddBook={handleAddBook}
                             showSessionDetail={handleShowSessionDetail}
                             handleAddBookWithRoom={handleAddBookWithRoom}
+                            courses={courses}
+                            refreshData={getData}
                         />
                     </div>
                 </div>
@@ -209,6 +167,7 @@ function Home() {
                 instructors={instructors}
                 selectedDate={selectedDate}
                 addBookedDate={addBookedDate}
+                courses={courses}
             />
             <SessionDetail
                 open={session != null}

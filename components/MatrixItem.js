@@ -3,7 +3,7 @@ import { Button, TableRow, TableCell, Chip } from '@mui/material'
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone'
 import { isDateEqual } from '../helper/helpers'
 
-import SessionItem from './SessionItem'
+import SessionItem from './SessionItem/SessionItem'
 
 function MatrixItem({
     id,
@@ -57,6 +57,7 @@ function MatrixItem({
                                         session={session}
                                         key={index}
                                         showSessionDetail={showSessionDetail}
+                                        isRoom={isRoom}
                                     />
                                 ))}
                         </div>

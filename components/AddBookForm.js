@@ -33,10 +33,9 @@ function AddBookForm({
 }) {
     const [activeSession, setActiveSession] = useState(false)
     const [room, setRoom] = useState('')
-    const [instructor, setInstructor] = useState('')
+    const [selectedInstructors, setSelectedInstructors] = useState([])
     const [maxSeats, setMaxSeats] = useState(12)
     const [sessionType, setSessionType] = useState('')
-    const [trainingRefrenceNumber, setTrainingRefrenceNumber] = useState('')
     const [dates, setDates] = useState([])
     const minSeats = 1
 
@@ -61,28 +60,33 @@ function AddBookForm({
     }
 
     const handleInstructorChange = (e) => {
-        setInstructor(e.target.value)
+        const {
+            target: { value },
+        } = e
+        if (value.length <= 3) setSelectedInstructors(value)
     }
 
     const handleSessionTypeChange = (e) => {
         setSessionType(e.target.value)
     }
 
-    const litmos_session_name = `${course.name}-${trainingRefrenceNumber}-${
-        instructor &&
-        organizations.find(
-            (o) =>
-                o.id ==
-                instructors.find((i) => i.id == instructor).organization_id
-        ).name
-    }`
+    const litmos_session_name = `${course.name}-${course.training_reference_number}`
+
+    // -${
+    //     instructor &&
+    //     organizations.find(
+    //         (o) =>
+    //             o.id ==
+    //             instructors.find((i) => i.id == instructor).organization_id
+    //     ).name
+    // }`
 
     const onSave = async () => {
         if (room === '') {
             alert('Please select a location')
             return
         }
-        if (instructor === '') {
+        if (selectedInstructors.length === 0) {
             alert('Please select an instructor')
             return
         }
@@ -90,32 +94,29 @@ function AddBookForm({
             alert('Max seats must be greater or equal than min seats')
             return
         }
-        if (trainingRefrenceNumber === '') {
-            alert('Please enter a training reference number')
-            return
-        }
         if (sessionType === '') {
             alert('Please select a session type')
             return
         }
-        dates.map((date) => {
-            if (date.start_date === null) {
+
+        for (let i = 0; i < dates.length; i++) {
+            if (dates[i].start_date === null) {
                 alert('Please select a start date')
                 return
             }
-            if (date.end_date === null) {
+            if (dates[i].end_date === null) {
                 alert('Please select an end date')
                 return
             }
-            if (date.start_time === null) {
+            if (dates[i].start_time === null) {
                 alert('Please select a start time')
                 return
             }
-            if (date.end_time === null) {
+            if (dates[i].end_time === null) {
                 alert('Please select an end time')
                 return
             }
-        })
+        }
 
         // setLoading(true)
 
@@ -133,14 +134,14 @@ function AddBookForm({
         const newBookedDate = await addDoc(docRef, {
             litmos_session_name: litmos_session_name,
             room_id: parseInt(room),
-            instructor_id: parseInt(instructor),
+            instructors: selectedInstructors,
             time_zone: 'Europe/Berlin',
             min_seats: 1,
             available_seats: parseInt(maxSeats),
             max_seats: parseInt(maxSeats),
-            training_reference_number: trainingRefrenceNumber,
             session_type: sessionType,
             session_dates,
+            course_id: course.id,
         })
 
         alert('Session added successfully')
@@ -192,8 +193,9 @@ function AddBookForm({
                 <Select
                     labelId='instructors'
                     id='instructors'
-                    value={instructor}
+                    value={selectedInstructors}
                     label='Instructor'
+                    multiple
                     onChange={handleInstructorChange}
                     // className='my-3'
                 >
@@ -229,17 +231,6 @@ function AddBookForm({
                 className='my-3'
                 value={maxSeats}
                 disabled
-            />
-
-            <TextField
-                label='Training Refrence Number'
-                variant='outlined'
-                fullWidth
-                className='my-3'
-                value={trainingRefrenceNumber}
-                onChange={(e) => {
-                    setTrainingRefrenceNumber(e.target.value)
-                }}
             />
 
             <FormControl fullWidth className='my-3'>

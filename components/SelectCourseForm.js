@@ -23,7 +23,7 @@ function SelectCourseForm({ courses, selectCourse }) {
             const fuse = new Fuse(courses, options)
             const result = fuse.search(search)
             setSearchedCourses(result.map((r) => r.item))
-            console.log(result)
+            // console.log(result)
         }
     }
 
@@ -35,6 +35,7 @@ function SelectCourseForm({ courses, selectCourse }) {
         (page - 1) * maxCoursesPerPage,
         page * maxCoursesPerPage
     )
+
     return (
         <div>
             <TextField
@@ -70,7 +71,7 @@ function SelectCourseForm({ courses, selectCourse }) {
                 </div>
             ))}
             <Pagination
-                count={searchedCourses.length / maxCoursesPerPage}
+                count={Math.ceil(searchedCourses.length / maxCoursesPerPage)}
                 onChange={handlePageChange}
             />
         </div>

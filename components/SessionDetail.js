@@ -147,7 +147,7 @@ function SessionDetail({ open, handleClose, session }) {
                             Training reference number
                         </div>
                         <div className='col-8'>
-                            {session.training_reference_number}
+                            {session.course.training_reference_number}
                         </div>
                     </div>
                     <hr />
