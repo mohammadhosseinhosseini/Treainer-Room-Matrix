@@ -15,6 +15,7 @@ import LoopTwoToneIcon from '@mui/icons-material/LoopTwoTone'
 
 import MatrixItem from './MatrixItem'
 import WeekPicker from './Matrix/WeekPicker'
+import Loading from './Loading'
 
 const dates = (current) => {
     var week = new Array()
@@ -40,9 +41,9 @@ export default function Matrix({
     handleAddBookWithRoom,
     courses,
     refreshData,
+    loading,
 }) {
     const [week, setWeek] = useState(dates(new Date()))
-    const [refreshLoading, setRefreshLoading] = useState(false)
     useEffect(() => {}, [])
 
     const onClickBookRoom = (id, date) => {
@@ -98,6 +99,7 @@ export default function Matrix({
                     week={week}
                     changeWeek={changeWeek}
                     changeWeekOnce={changeWeekOnce}
+                    disabled={loading}
                 />
                 <Button
                     className='ms-2'
@@ -116,88 +118,89 @@ export default function Matrix({
                     variant='outlined'
                     color='success'
                     startIcon={<LoopTwoToneIcon />}
-                    disabled={refreshLoading}
-                    onClick={() => {
-                        setRefreshLoading(true)
-                        refreshData().then(() => {
-                            setRefreshLoading(false)
-                        })
-                    }}
+                    disabled={loading}
+                    onClick={refreshData}
                 >
                     Refresh Data
                 </Button>
             </div>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <b>Rooms</b>
-                            </TableCell>
-                            {week.map((date) => (
-                                <TableCell align='center' key={date}>
-                                    {getWeekDay(date)}
-                                    <br />
-                                    <p
-                                        className='m-0'
-                                        style={{
-                                            color: 'gray',
-                                            fontSize: '12px',
-                                        }}
-                                    >
-                                        {date.toLocaleDateString('de-DE')}
-                                    </p>
+            {loading ? (
+                <div className='text-center' style={{ height: 350 }}>
+                    <Loading />
+                </div>
+            ) : (
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <b>Rooms</b>
                                 </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rooms.length > 0 &&
-                            rooms.map((room) => (
-                                <MatrixItem
-                                    key={room.id}
-                                    id={room.id}
-                                    name={`${room.name} (${room.city})`}
-                                    week={week}
-                                    onBookClick={handleAddBookWithRoom}
-                                    isRoom
-                                    isBooked={isBooked}
-                                    showSessionDetail={showSessionDetail}
-                                />
-                            ))}
-                        <TableRow
-                            sx={{
-                                '&:last-child td, &:last-child th': {
-                                    border: 0,
-                                },
-                            }}
-                        >
-                            <TableCell component='th' scope='row'>
-                                <b>Instructors</b>
-                            </TableCell>
-                            {week.map((day) => (
-                                <TableCell
-                                    key={day}
-                                    style={{ minWidth: 180 }}
-                                ></TableCell>
-                            ))}
-                        </TableRow>
-                        {instructors.length > 0 &&
-                            instructors.map((instructor) => (
-                                <MatrixItem
-                                    key={instructor.id}
-                                    id={instructor.id}
-                                    name={instructor.name}
-                                    week={week}
-                                    onBookClick={onClickBookInstructor}
-                                    isBooked={isBooked}
-                                    showSessionDetail={showSessionDetail}
-                                    courses={courses}
-                                />
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                                {week.map((date) => (
+                                    <TableCell align='center' key={date}>
+                                        {getWeekDay(date)}
+                                        <br />
+                                        <p
+                                            className='m-0'
+                                            style={{
+                                                color: 'gray',
+                                                fontSize: '12px',
+                                            }}
+                                        >
+                                            {date.toLocaleDateString('de-DE')}
+                                        </p>
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rooms.length > 0 &&
+                                rooms.map((room) => (
+                                    <MatrixItem
+                                        key={room.id}
+                                        id={room.id}
+                                        name={`${room.name} (${room.city})`}
+                                        week={week}
+                                        onBookClick={handleAddBookWithRoom}
+                                        isRoom
+                                        isBooked={isBooked}
+                                        showSessionDetail={showSessionDetail}
+                                    />
+                                ))}
+                            <TableRow
+                                sx={{
+                                    '&:last-child td, &:last-child th': {
+                                        border: 0,
+                                    },
+                                }}
+                            >
+                                <TableCell component='th' scope='row'>
+                                    <b>Instructors</b>
+                                </TableCell>
+                                {week.map((day) => (
+                                    <TableCell
+                                        key={day}
+                                        style={{ minWidth: 180 }}
+                                    ></TableCell>
+                                ))}
+                            </TableRow>
+                            {instructors.length > 0 &&
+                                instructors.map((instructor) => (
+                                    <MatrixItem
+                                        key={instructor.id}
+                                        id={instructor.id}
+                                        name={instructor.name}
+                                        week={week}
+                                        onBookClick={onClickBookInstructor}
+                                        isBooked={isBooked}
+                                        showSessionDetail={showSessionDetail}
+                                        courses={courses}
+                                    />
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            )}
         </>
     )
 }

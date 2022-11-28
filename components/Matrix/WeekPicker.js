@@ -41,7 +41,7 @@ const CustomPickersDay = styled(PickersDay, {
     }),
 }))
 
-function WeekPicker({ week, changeWeek, changeWeekOnce }) {
+function WeekPicker({ week, changeWeek, changeWeekOnce, disabled }) {
     const [value, setValue] = React.useState(null)
 
     useEffect(() => {
@@ -77,6 +77,7 @@ function WeekPicker({ week, changeWeek, changeWeekOnce }) {
                 <div>
                     <IconButton
                         color='primary'
+                        disabled={disabled}
                         onClick={() => {
                             changeWeekOnce(false)
                         }}
@@ -87,6 +88,7 @@ function WeekPicker({ week, changeWeek, changeWeekOnce }) {
                 <div>
                     <IconButton
                         color='primary'
+                        disabled={disabled}
                         onClick={() => {
                             changeWeekOnce(true)
                         }}
@@ -97,6 +99,7 @@ function WeekPicker({ week, changeWeek, changeWeekOnce }) {
                 {/* <h2>CW{getWeekNumber(week[0])}</h2> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DesktopDatePicker
+                        disabled={disabled}
                         displayStaticWrapperAs='desktop'
                         label='Week picker'
                         value={week[0]}
@@ -105,7 +108,9 @@ function WeekPicker({ week, changeWeek, changeWeekOnce }) {
                             console.log(new Date(newValue))
                         }}
                         renderDay={renderWeekPickerDay}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => (
+                            <TextField disabled={disabled} {...params} />
+                        )}
                         inputFormat={`CW${getWeekNumber(week[0])}`}
                     />
                 </LocalizationProvider>

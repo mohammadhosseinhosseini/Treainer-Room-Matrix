@@ -6,6 +6,7 @@ import AddBook from '../components/AddBook'
 import SessionDetail from '../components/SessionDetail'
 
 import axios from 'axios'
+import Loading from '../components/Loading'
 
 function Home() {
     const [rooms, setRooms] = useState([])
@@ -17,12 +18,14 @@ function Home() {
     const [session, setSession] = useState(null)
     const [selectedRoom, setSelectedRoom] = useState('')
     const [selectedDate, setSelectedDate] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getData()
     }, [])
 
     const getData = async () => {
+        setLoading(true)
         const { data } = await axios.get('/api/data')
 
         setCourses(data.courses)
@@ -64,6 +67,7 @@ function Home() {
         )
 
         setOrganizations(data.organizations)
+        setLoading(false)
     }
 
     const handleRoomCheck = (id) => {
@@ -146,6 +150,7 @@ function Home() {
                             handleAddBookWithRoom={handleAddBookWithRoom}
                             courses={courses}
                             refreshData={getData}
+                            loading={loading}
                         />
                     </div>
                 </div>
