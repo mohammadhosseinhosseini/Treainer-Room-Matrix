@@ -5,7 +5,8 @@ import SessionItemSeats from './SessionItemSeats'
 import SchoolTwoToneIcon from '@mui/icons-material/SchoolTwoTone'
 import ClassTwoToneIcon from '@mui/icons-material/ClassTwoTone'
 
-const getBorderColor = (session_type) => {
+const getBorderColor = (session_type, course_id) => {
+    if (course_id === 1) return 'grey'
     switch (session_type) {
         case 'Classroom':
             return 'gray'
@@ -18,10 +19,12 @@ const getBorderColor = (session_type) => {
     }
 }
 
-const getBGColor = (session_type) => {
+const getBGColor = (session_type, course_id) => {
+    if (course_id === 1) return '#ababab'
+
     switch (session_type) {
         case 'Classroom':
-            return '#ababab'
+            return '#d1bd0a'
         case 'Webinar':
             return '#eee'
         case 'Microsof Teams':
@@ -31,7 +34,9 @@ const getBGColor = (session_type) => {
     }
 }
 
-const getColor = (session_type) => {
+const getColor = (session_type, course_id) => {
+    if (course_id === 1) return '#fff'
+
     switch (session_type) {
         case 'Classroom':
             return '#fff'
@@ -41,6 +46,21 @@ const getColor = (session_type) => {
             return '#fff'
         default:
             return '#fff'
+    }
+}
+
+const getBGclass = (session_type, course_id) => {
+    if (course_id === 1) return 'blocker'
+
+    switch (session_type) {
+        case 'Classroom':
+            return 'classroom'
+        case 'Webinar':
+            return 'webinar'
+        case 'Microsof Teams':
+            return 'teams'
+        default:
+            return 'teams'
     }
 }
 
@@ -54,7 +74,10 @@ function SessionItem({ session, date, showSessionDetail, isRoom }) {
     } = session
     return (
         <div
-            className={`SessionItem `}
+            className={`SessionItem ${getBGclass(
+                session_type,
+                session.course_id
+            )}`}
             onClick={() => {
                 const dates = session_dates.map((session_date) => {
                     if (isDateEqual(session_date.start_date, date))
@@ -65,11 +88,11 @@ function SessionItem({ session, date, showSessionDetail, isRoom }) {
                     ...dates[0],
                 })
             }}
-            style={{
-                borderColor: getBorderColor(session_type),
-                backgroundColor: getBGColor(session_type),
-                color: getColor(session_type),
-            }}
+            // style={{
+            //     borderColor: getBorderColor(session_type, session.course_id),
+            //     backgroundColor: getBGColor(session_type, session.course_id),
+            //     color: getColor(session_type, session.course_id),
+            // }}
         >
             <SessionItemSeats
                 availableSeats={available_seats}
@@ -77,7 +100,7 @@ function SessionItem({ session, date, showSessionDetail, isRoom }) {
             />
             <div className='d-flex mt-1'>
                 {/* <ClassTwoToneIcon style={{ fontSize: 20 }} /> */}
-                <p className='m-0 ms-1' style={{ fontSize: 12, color: '#333' }}>
+                <p className='m-0 ms-1' style={{ fontSize: 12 }}>
                     <strong>Name:</strong>
                     {litmos_session_name}
                 </p>
@@ -85,7 +108,7 @@ function SessionItem({ session, date, showSessionDetail, isRoom }) {
 
             <div className='d-flex mt-1'>
                 {/* <SchoolTwoToneIcon style={{ fontSize: 20 }} /> */}
-                <p className='m-0 ms-1' style={{ fontSize: 12, color: '#333' }}>
+                <p className='m-0 ms-1' style={{ fontSize: 12 }}>
                     {isRoom ? (
                         <>
                             <strong>Trainer:</strong>{' '}
